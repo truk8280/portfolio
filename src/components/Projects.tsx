@@ -1,10 +1,10 @@
-import ProjectCard, { type Project } from "../components/ProjectCard";
-import footballAppImg from "../assets/football-app.webp";
-import myLeaguesImg from "../assets/myleagues.webp";
-import picksAndPropsImg from "../assets/picks-and-props.webp";
-import dfsOptimizerImg from "../assets/dfs-optimizer.webp";
-import nhlLineupsImg from "../assets/nhl-lineups.webp";
-import partnersImg from "../assets/partners.webp";
+import ProjectCard, { type Project } from "@/components/ProjectCard";
+import footballAppImg from "@/assets/football-app.webp";
+import myLeaguesImg from "@/assets/myleagues.webp";
+import picksAndPropsImg from "@/assets/picks-and-props.webp";
+import dfsOptimizerImg from "@/assets/dfs-optimizer.webp";
+import nhlLineupsImg from "@/assets/nhl-lineups.webp";
+import partnersImg from "@/assets/partners.webp";
 
 function getDFSOptimizerHref() {
   const now = new Date();

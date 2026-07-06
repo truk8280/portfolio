@@ -1,7 +1,7 @@
-import Nav from "./screens/Nav";
-import Hero from "./screens/Hero";
-import Projects from "./screens/Projects";
-import Footer from "./screens/Footer";
+import Nav from "@/components/Nav";
+import Hero from "@/components/Hero";
+import Projects from "@/components/Projects";
+import Footer from "@/components/Footer";
 
 function App() {
   return (
