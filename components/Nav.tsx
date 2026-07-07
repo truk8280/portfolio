@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -25,18 +26,25 @@ function Nav() {
         <Link
           href="/"
           onClick={() => setMenuOpen(false)}
-          className="font-mono text-base font-medium text-primary no-underline"
+          className="flex items-center gap-2 font-mono text-base font-medium text-primary no-underline"
         >
+          <Image
+            src="/favicon.svg"
+            alt=""
+            width={24}
+            height={24}
+            aria-hidden="true"
+          />
           kurtkroll<span className="text-accent">.dev</span>
         </Link>
 
-        <ul className="m-0 hidden list-none items-center gap-8 p-0 md:flex">
+        <ul className="m-0 hidden list-none items-center p-0 md:flex">
           {links.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
                 aria-current={isActive(link.href) ? "page" : undefined}
-                className={`border-b-2 pb-1 text-[13px] no-underline transition-colors ${
+                className={`inline-block border-b-2 px-3 py-2 -my-2 text-[13px] no-underline transition-colors ${
                   isActive(link.href)
                     ? "border-accent text-primary"
                     : "border-transparent text-secondary hover:text-primary"
@@ -52,7 +60,7 @@ function Nav() {
               download
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-md border border-green-600 px-3 py-1.5 text-[13px] text-accent no-underline transition-colors hover:border-accent hover:text-accent-hover"
+              className="rounded-md border border-green-600 ml-2 px-3 py-1.5 text-[13px] text-accent no-underline transition-colors hover:border-accent hover:text-accent-hover"
             >
               Resume
             </a>
@@ -99,7 +107,7 @@ function Nav() {
               <Link
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className={`block py-2 text-sm no-underline transition-colors ${
+                className={`block -mx-2 px-2 py-3 text-sm no-underline transition-colors ${
                   isActive(link.href) ? "text-primary" : "text-secondary"
                 }`}
               >
