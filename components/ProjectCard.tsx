@@ -1,8 +1,10 @@
+import Image, { type StaticImageData } from "next/image";
+
 export type Project = {
   title: string;
   description: string;
   tags: string[];
-  image?: string;
+  image?: StaticImageData;
   href: string;
 };
 
@@ -14,12 +16,14 @@ function ProjectCard({ title, description, tags, image, href }: Project) {
       rel="noopener noreferrer"
       className="group flex flex-col overflow-hidden rounded-xl border-[0.5px] border-line bg-surface no-underline transition-colors hover:border-white-700"
     >
-      <div className="m-3 mb-0 aspect-16/10 overflow-hidden rounded-lg bg-white-300">
+      <div className="relative m-3 mb-0 aspect-16/10 overflow-hidden rounded-lg bg-white-300">
         {image && (
-          <img
+          <Image
             src={image}
             alt={`${title} screenshot`}
-            className="h-full w-full object-cover object-top"
+            fill
+            sizes="(max-width: 640px) 100vw, 50vw"
+            className="object-cover object-top"
           />
         )}
       </div>

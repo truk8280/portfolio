@@ -1,62 +1,49 @@
-import { useEffect, useState } from "react";
+"use client";
 
-type NavLink = { id: string; label: string };
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+
+type NavLink = { href: string; label: string };
 
 const links: NavLink[] = [
-  // TODO: Add nav links here.
+  { href: "/", label: "Home" },
+  { href: "/timer", label: "Chaos Countdown" },
 ];
 
 function Nav() {
-  const [active, setActive] = useState("about");
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Scroll-spy: highlight the nav link for the section currently in view.
-  useEffect(() => {
-    const sections = links
-      .map((l) => document.getElementById(l.id))
-      .filter((el): el is HTMLElement => el !== null);
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActive(visible.target.id);
-      },
-      { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
-    );
-
-    sections.forEach((s) => observer.observe(s));
-    return () => observer.disconnect();
-  }, []);
+  const normalize = (p: string) =>
+    p.length > 1 && p.endsWith("/") ? p.slice(0, -1) : p;
+  const isActive = (href: string) => normalize(pathname) === normalize(href);
 
   return (
     <nav className="sticky top-0 z-50 border-b-[0.5px] border-line bg-page">
       <div className="mx-auto flex w-full max-w-3xl lg:max-w-5xl items-center justify-between px-4 py-4 md:px-6">
-        {/* Logo */}
-        <a
+        <Link
           href="/"
           onClick={() => setMenuOpen(false)}
           className="font-mono text-base font-medium text-primary no-underline"
         >
           kurtkroll<span className="text-accent">.dev</span>
-        </a>
+        </Link>
 
-        {/* Desktop links */}
         <ul className="m-0 hidden list-none items-center gap-8 p-0 md:flex">
           {links.map((link) => (
-            <li key={link.id}>
-              <a
-                href={`#${link.id}`}
-                aria-current={active === link.id ? "true" : undefined}
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                aria-current={isActive(link.href) ? "page" : undefined}
                 className={`border-b-2 pb-1 text-[13px] no-underline transition-colors ${
-                  active === link.id
+                  isActive(link.href)
                     ? "border-accent text-primary"
                     : "border-transparent text-secondary hover:text-primary"
                 }`}
               >
                 {link.label}
-              </a>
+              </Link>
             </li>
           ))}
           <li>
@@ -72,7 +59,6 @@ function Nav() {
           </li>
         </ul>
 
-        {/* Mobile hamburger */}
         <button
           type="button"
           aria-label="Toggle menu"
@@ -106,20 +92,19 @@ function Nav() {
         </button>
       </div>
 
-      {/* Mobile menu panel */}
       {menuOpen && (
         <ul className="m-0 flex list-none flex-col gap-1 border-t-[0.5px] border-line px-4 py-3 md:hidden">
           {links.map((link) => (
-            <li key={link.id}>
-              <a
-                href={`#${link.id}`}
+            <li key={link.href}>
+              <Link
+                href={link.href}
                 onClick={() => setMenuOpen(false)}
                 className={`block py-2 text-sm no-underline transition-colors ${
-                  active === link.id ? "text-primary" : "text-secondary"
+                  isActive(link.href) ? "text-primary" : "text-secondary"
                 }`}
               >
                 {link.label}
-              </a>
+              </Link>
             </li>
           ))}
           <li>
