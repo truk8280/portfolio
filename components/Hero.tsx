@@ -2,7 +2,7 @@ function Hero() {
   return (
     <section
       id="about"
-      className="mx-auto w-full max-w-3xl lg:max-w-5xl pt-16 px-4 md:px-6"
+      className="mx-auto w-full max-w-3xl lg:max-w-5xl pt-6 sm:pt-8 lg:pt-16 px-6"
     >
       <div className="max-w-140">
         <p className="mb-4 font-mono text-lg text-accent">// about</p>
