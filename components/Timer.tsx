@@ -10,10 +10,12 @@ import {
 } from "@/types/modifiers";
 
 function formatClock(totalSec: number) {
-  const min = Math.floor(totalSec / 60);
-  const sec = totalSec % 60;
   const pad = (n: number) => n.toString().padStart(2, "0");
-  return `${pad(min)}:${pad(sec)}`;
+  const hrs = Math.floor(totalSec / 3600);
+  const min = Math.floor((totalSec % 3600) / 60);
+  const sec = totalSec % 60;
+  // Once past an hour, show H:MM:SS; otherwise stay MM:SS.
+  return hrs > 0 ? `${hrs}:${pad(min)}:${pad(sec)}` : `${pad(min)}:${pad(sec)}`;
 }
 
 function toInt(value: string, max: number) {
@@ -22,7 +24,16 @@ function toInt(value: string, max: number) {
   return Math.min(max, Math.max(0, n));
 }
 
-function Timer() {
+type TimerProps = {
+  // Called every tick with the current remaining time (in seconds). Feeds the
+  // drift graph, where 0 is the final line and the start total is the start line.
+  onPoint?: (remaining: number) => void;
+  // Called when the run is reset or reconfigured, with the new starting total
+  // (seconds), to clear the graph history and reposition the start line.
+  onReset?: (startTotal: number) => void;
+};
+
+function Timer({ onPoint, onReset }: TimerProps) {
   const [minStr, setMinStr] = useState("10");
   const [secStr, setSecStr] = useState("0");
 
@@ -58,6 +69,7 @@ function Timer() {
 
       setRemaining(core.remainingSec);
       setTickMs(core.tickMs);
+      onPoint?.(core.remainingSec);
       if (mod.id !== DEFAULT_STEP.id) {
         setEvents((prev) => [mod, ...prev].slice(0, 6));
       }
@@ -82,9 +94,11 @@ function Timer() {
   const reconfigure = (nextMin: string, nextSec: string) => {
     setMinStr(nextMin);
     setSecStr(nextSec);
-    setRemaining(toInt(nextMin, 999) * 60 + toInt(nextSec, 59));
+    const nextTotal = toInt(nextMin, 999) * 60 + toInt(nextSec, 59);
+    setRemaining(nextTotal);
     setTickMs(BASE_TICK_MS);
     setEvents([]);
+    onReset?.(nextTotal);
   };
 
   const handleStartPause = () => setRunning((r) => !r);
@@ -93,6 +107,7 @@ function Timer() {
     setRemaining(configuredTotal);
     setTickMs(BASE_TICK_MS);
     setEvents([]);
+    onReset?.(configuredTotal);
   };
 
   return (
