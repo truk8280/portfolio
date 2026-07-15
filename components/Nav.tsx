@@ -26,7 +26,7 @@ function Nav() {
         <Link
           href="/"
           onClick={() => setMenuOpen(false)}
-          className="flex items-center gap-2 font-mono text-base font-medium text-primary no-underline"
+          className="flex items-center gap-2 font-mono text-lg font-medium text-primary no-underline"
         >
           <Image
             src="/favicon.svg"
@@ -35,7 +35,9 @@ function Nav() {
             height={24}
             aria-hidden="true"
           />
-          kurtkroll<span className="text-accent">.dev</span>
+          <span className="mt-px">
+            kurtkroll<span className="text-accent">.dev</span>
+          </span>
         </Link>
 
         <ul className="m-0 hidden list-none items-center p-0 md:flex">
@@ -108,7 +110,7 @@ function Nav() {
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
                 className={`block -mx-2 px-2 py-3 text-sm no-underline transition-colors ${
-                  isActive(link.href) ? "text-primary" : "text-secondary"
+                  isActive(link.href) ? "text-accent" : "text-secondary"
                 }`}
               >
                 {link.label}
@@ -122,7 +124,7 @@ function Nav() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
-              className="block py-2 text-sm text-accent no-underline"
+              className="block py-2 text-sm text-secondary no-underline"
             >
               Resume
             </a>
