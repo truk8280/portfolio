@@ -49,7 +49,7 @@ function Projects() {
         "Architected and shipped this hybrid React Native app with 90% code reuse across iOS and Android. Served as technical lead for the team's React Native adoption, setting code-review standards and mentoring on component design patterns. An early adopter of AI-assisted development with Claude Code, integrating it into daily workflows to accelerate delivery.",
       tags: ["React Native", "IOS", "Android", "API Design"],
       image: footballAppImg,
-      href: "https://play.google.com/store/apps/details?id=com.rotowire.football",
+      href: "https://apps.apple.com/us/app/rotowire-fantasy-football/id6740585331",
     },
     {
       title: "Picks & Props",
